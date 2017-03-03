@@ -91,15 +91,19 @@ class NSManagedObjectContextHelpersTests: XCTestCase {
     }
     
     func testMainContext_fetchObject() {
+        
+        let searchQuery = "test"
+        
         NSManagedObjectContext.performInWorkerContextAndSave { context in
-            let searchQuery = "test"
             let newTestEntity = context.insertObject(with: TestEntity.self)
             newTestEntity?.testEntityAttribute = searchQuery
-            let predicate = NSPredicate(format: "testEntityAttribute == %@", searchQuery)
-            let fetchedObjects = context.fetchObjects(with: TestEntity.self,
-                                                      predicate: predicate)
-            XCTAssertNotNil(fetchedObjects)
         };
+        
+        let predicate = NSPredicate(format: "testEntityAttribute == %@", searchQuery)
+        let fetchedObjects = NSManagedObjectContext.defaultMainQueueContext?.fetchObjects(with: TestEntity.self,
+                                                                                          predicate: predicate)
+        XCTAssertNotNil(fetchedObjects)
+        
     }
     
     func testMainContext_fetchObjectsAsynchronously() {
@@ -111,14 +115,13 @@ class NSManagedObjectContextHelpersTests: XCTestCase {
         };
         
         let expectation = self.expectation(description: "Action performed")
-        NSManagedObjectContext.performInMainQueueContextAndSave { context in
-            let preliminarySuccess = context.fetchObjectsAsynchronously(with: TestEntity.self) { fetchedObjects in
-                XCTAssertFalse(fetchedObjects?.count == 0)
-                expectation.fulfill()
-            }
-            XCTAssertTrue(preliminarySuccess)
-            
+        let preliminarySuccess = NSManagedObjectContext.defaultMainQueueContext?.fetchObjectsAsynchronously(with: TestEntity.self) { fetchedObjects in
+            XCTAssertFalse(fetchedObjects?.count == 0)
+            expectation.fulfill()
         }
+        
+        XCTAssertNotNil(preliminarySuccess)
+        XCTAssertTrue(preliminarySuccess!)
         
         self.waitForExpectations(timeout: 0.5) { error in
             if error != nil {
