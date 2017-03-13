@@ -38,15 +38,15 @@ class NSManagedObjectContextHelpersTests: XCTestCase {
         }
     }
     
-    func test_defaultMainQueueContext() {
+    func testDefaultMainQueueContext() {
         XCTAssertNotNil(NSManagedObjectContext.defaultMainQueueContext)
     }
     
-    func test_makeWorkerContext() {
+    func testMakeWorkerContext() {
         XCTAssertNotNil(NSManagedObjectContext.makeWorkerContext())
     }
     
-    func test_performInMainQueueContextAndSave() {
+    func testPerformInMainQueueContextAndSave() {
         let expectation = self.expectation(description: "Action performed")
         NSManagedObjectContext.performInWorkerContextAndSave { context in
             XCTAssertNotNil(context)
@@ -57,7 +57,7 @@ class NSManagedObjectContextHelpersTests: XCTestCase {
         }
     }
     
-    func test_performInWorkerContextAndSave() {
+    func testPerformInWorkerContextAndSave() {
         let expectation = self.expectation(description: "Action performed")
         NSManagedObjectContext.performInWorkerContextAndSave { context in
             XCTAssertNotNil(context)
@@ -71,7 +71,7 @@ class NSManagedObjectContextHelpersTests: XCTestCase {
         }
     }
     
-    func testWorkerContext_saveContextChangesToPersistentStore() {
+    func testWorkerContextSaveContextChangesToPersistentStore() {
         let workerContext = NSManagedObjectContext.makeWorkerContext()
         workerContext?.performAndWait {
             do {
@@ -83,14 +83,14 @@ class NSManagedObjectContextHelpersTests: XCTestCase {
         }
     }
     
-    func testWorkerContext_insertObject() {
+    func testWorkerContextInsertObject() {
         NSManagedObjectContext.performInWorkerContextAndSave { context in
             let newTestEntity = context.insertObject(with: TestEntity.self)
             XCTAssertNotNil(newTestEntity)
         };
     }
     
-    func testMainContext_fetchObject() {
+    func testMainContextFetchObject() {
         
         let searchQuery = "test"
         
@@ -106,7 +106,7 @@ class NSManagedObjectContextHelpersTests: XCTestCase {
         
     }
     
-    func testMainContext_fetchObjectsAsynchronously() {
+    func testMainContextFetchObjectsAsynchronously() {
         
         NSManagedObjectContext.performInMainQueueContextAndSave { context in
             let searchQuery = "test"
@@ -132,7 +132,7 @@ class NSManagedObjectContextHelpersTests: XCTestCase {
         
     }
     
-    func testMainContext_deleteObjects() {
+    func testMainContextDeleteObjects() {
         NSManagedObjectContext.performInMainQueueContextAndSave { context in
             _ = context.insertObject(with: TestEntity.self)
             context.deleteObjects(with: TestEntity.self)

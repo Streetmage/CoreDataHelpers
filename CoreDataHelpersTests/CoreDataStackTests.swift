@@ -31,12 +31,12 @@ class CoreDataStackTests: XCTestCase {
                                            persistanceStoreFileName: "test.sqlite")
     }
     
-    func test_init() {
+    func testInit() {
         XCTAssertNotNil(self.coreDataStack)
         XCTAssertNotNil(self.coreDataStack?.mainQueueContext)
     }
     
-    func test_makeWorkerContext() {
+    func testMakeWorkerContext() {
         let workerContext = self.coreDataStack?.makeWorkerContext()
         XCTAssertNotNil(workerContext)
     }
