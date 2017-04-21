@@ -35,9 +35,13 @@ import CoreData
 
 open class CoreDataStack {
     
-    static var defaultStack: CoreDataStack?
+    // MARK: Public Properties
     
-    var mainQueueContext: NSManagedObjectContext?
+    public static var defaultStack: CoreDataStack?
+    
+    public var mainQueueContext: NSManagedObjectContext?
+    
+    // MARK: Private Properties
     
     private var persistentStoreCoordinator: NSPersistentStoreCoordinator?
     private var persistentStoreCoordinatorContext: NSManagedObjectContext?
