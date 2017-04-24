@@ -53,13 +53,13 @@ open class CoreDataStack {
         let modelUrl = bundle.url(forResource: modelFileName, withExtension: "momd")
         
         guard let safeModelUrl = modelUrl else {
-            return
+            fatalError("Model URL is invalid")
         }
         
         let managedObjectModel = NSManagedObjectModel(contentsOf: safeModelUrl)
         
         guard let safeObjectModel = managedObjectModel else {
-            return
+            fatalError("Model cannot be created with contents of URL \(safeModelUrl)")
         }
         
         persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: safeObjectModel)
@@ -68,7 +68,7 @@ open class CoreDataStack {
         persistenceStorePath?.append("/\(persistanceStoreFileName)")
         
         guard let safePersistenceStorePath = persistenceStorePath else {
-            return
+            fatalError("Invalid path for persistence store")
         }
         
         let persistentStoreUrl = URL(fileURLWithPath: safePersistenceStorePath)

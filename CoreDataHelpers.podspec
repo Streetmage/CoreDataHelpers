@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "CoreDataHelpers"
-  s.version      = "0.1.2"
+  s.version      = "0.1.3"
   s.summary      = "CoreDataHelpers contain CoreData stack initialization and helper methods to work with requests"
   s.homepage     = "https://github.com/Streetmage/CoreDataHelpers"
   s.license      = "MIT"
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target  = '10.0'
 
-  s.source       = { :git => "https://github.com/Streetmage/CoreDataHelpers.git", :tag => "0.1.2" }
+  s.source       = { :git => "https://github.com/Streetmage/CoreDataHelpers.git", :tag => "0.1.3" }
 
   s.source_files  = "CoreDataHelpers/*.swift"
 
