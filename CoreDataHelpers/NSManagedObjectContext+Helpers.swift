@@ -157,7 +157,7 @@ extension NSManagedObjectContext {
     
     public func deleteObjects<T: NSManagedObject>(with managedClass: T.Type, predicate: NSPredicate? = nil) {
         
-        let fetchedObjects = self.fetchObjects(with: managedClass)
+        let fetchedObjects = self.fetchObjects(with: managedClass, predicate: predicate)
         
         guard let safeResult = fetchedObjects else {
             return
